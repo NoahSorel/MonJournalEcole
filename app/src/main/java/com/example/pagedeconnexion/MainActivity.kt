@@ -24,12 +24,15 @@ class MainActivity : Activity() {
 
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show()
-            } else if (username == "prof" && password == "1234") {
-                Toast.makeText(this, "Connexion réussie ! Espace Professeur", Toast.LENGTH_LONG).show()
-                // Plus tard : redirection vers l'ajout d'annonces (stages, réunions)
-            } else if (username == "eleve" && password == "1234") {
-                Toast.makeText(this, "Connexion réussie ! Espace Élève", Toast.LENGTH_LONG).show()
-                // Plus tard : redirection vers la consultation des retards et sorties
+            } else if ((username == "prof" || username == "eleve") && password == "1234") {
+                Toast.makeText(this, "Connexion réussie !", Toast.LENGTH_SHORT).show()
+
+                // L'outil magique pour changer de page s'appelle un Intent
+                val intent = android.content.Intent(this, HomeActivity::class.java)
+                // On envoie le pseudo ou le rôle à la page suivante
+                intent.putExtra("USER_ROLE", username)
+                startActivity(intent)
+                finish() // Ferme la page de connexion pour qu'on ne puisse pas y retourner avec le bouton retour
             } else {
                 Toast.makeText(this, "Identifiants invalides", Toast.LENGTH_SHORT).show()
             }
